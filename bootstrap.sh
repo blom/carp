@@ -4,9 +4,6 @@ set -e
 
 . /etc/lsb-release
 
-wget http://apt.puppetlabs.com/puppetlabs-release-${DISTRIB_CODENAME}.deb
-dpkg --install puppetlabs-release-precise.deb
-
 cat > /etc/apt/sources.list <<__EOF__
 deb mirror://mirrors.ubuntu.com/mirrors.txt ${DISTRIB_CODENAME} main
 deb mirror://mirrors.ubuntu.com/mirrors.txt ${DISTRIB_CODENAME}-updates main
@@ -23,7 +20,6 @@ apt-get --yes dist-upgrade
 
 packages=(
   git
-  puppet
   rake
   ruby1.9.3
   rubygems
@@ -39,8 +35,8 @@ gem: --no-rdoc --no-ri
   - https://rubygems.org/
 __EOF__
 
-if ! gem list | grep -q librarian-puppet; then
-  gem install librarian-puppet
+if ! gem list | egrep -q '^(librarian-)?puppet\s'; then
+  gem install librarian-puppet puppet
 fi
 
 librarian-puppet install --path=/etc/puppet/modules
