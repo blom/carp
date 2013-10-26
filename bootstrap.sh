@@ -36,10 +36,15 @@ gem: --no-rdoc --no-ri
   - https://rubygems.org/
 __EOF__
 
-if ! gem list | egrep -q '^(librarian-)?puppet\s'; then
-  gem install librarian-puppet puppet
-fi
+geminst() {
+  if ! gem list | egrep -q "^$1\s"; then
+    gem install $1
+  fi
+}
 
-librarian-puppet install --path=/etc/puppet/modules
+geminst puppet
+geminst r10k
 
-exec puppet apply bootstrap.pp
+r10k puppetfile install
+
+exec puppet apply --modulepath=./modules bootstrap.pp
