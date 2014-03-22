@@ -14,7 +14,7 @@ deb mirror://mirrors.ubuntu.com/mirrors.txt ${DISTRIB_CODENAME}-updates universe
 __EOF__
 
 rm -f /boot/grub/menu.lst
-update-grub -y
+update-grub
 
 apt-get update
 apt-get --yes dist-upgrade
