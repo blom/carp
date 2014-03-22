@@ -21,9 +21,7 @@ apt-get --yes dist-upgrade
 
 packages=(
   git
-  rake
   ruby1.9.3
-  rubygems
 )
 apt-get --yes install ${packages[*]}
 
